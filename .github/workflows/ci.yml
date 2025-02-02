@@ -38,7 +38,7 @@ jobs:
         run: ls -la ./dist
 
       - name: Upload build artifact
-        uses: actions/upload-pages-artifact@v2.0.0
+        uses: actions/upload-artifact@v3
         with:
           path: ./dist
 
