@@ -34,8 +34,11 @@ jobs:
       - name: Build project
         run: npm run build
 
-      - name: Upload build artifact 
-        uses: actions/upload-pages-artifact@v2
+      - name: Debug build output
+        run: ls -la ./dist
+
+      - name: Upload build artifact
+        uses: actions/upload-pages-artifact@v2.0.0
         with:
           path: ./dist
 
