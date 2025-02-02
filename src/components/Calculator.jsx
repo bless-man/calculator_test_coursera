@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import { Component } from "react";
 
 import "./calculator.css";
 
@@ -42,14 +42,9 @@ export class Calculator extends Component {
   clearResult = () => {
     this.setState({ result: "" });
   };
-  handleKeyPress = (event) => {
-    if (event.key === "Enter") {
-      this.calculateResult();
-    }
-  };
-  calculateResult = () => {
+  calculateResult = (value) => {
     try {
-      this.setState({ result: eval(this.state.input).toString() });
+      this.setState({ result: eval(this.state.result + value + this.state.input).toString() });
       this.setState({ input: '' });
     } catch (error) {
       this.setState({ result: "Error" });
@@ -67,7 +62,7 @@ export class Calculator extends Component {
             readOnly
             className="calculator__display"
           />
-          <label>Calculator:</label>
+          <label>Input:</label>
           <input
             type="text"
             value={this.state.input}
@@ -80,7 +75,7 @@ export class Calculator extends Component {
           {this.btns.map(({ title, value, id }) => (
             <button
               key={id}
-              onClick={() => this.handleClick(value)}
+              onClick={() => this.calculateResult(value)}
               className="calculator__button"
             >
               {title}
@@ -97,12 +92,6 @@ export class Calculator extends Component {
             className="calculator__button calculator__clear"
           >
             Clear result
-          </button>
-          <button
-            onClick={this.calculateResult}
-            className="calculator__button calculator__equal"
-          >
-            Get Result
           </button>
         </div>
       </div>
