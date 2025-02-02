@@ -38,8 +38,9 @@ jobs:
         run: ls -la ./dist
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4 
         with:
+          name: build-artifact
           path: ./dist
 
   deploy:
@@ -47,5 +48,11 @@ jobs:
     needs: build
 
     steps:
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifact
+          path: ./dist
+
       - name: Deploy to GitHub Pages
         uses: actions/deploy-pages@v2
