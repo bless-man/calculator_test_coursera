@@ -3,28 +3,6 @@ import { Component } from "react";
 import "./calculator.css";
 
 export class Calculator extends Component {
-  btns = [
-    {
-      id: "1",
-      title: "add",
-      value: "+",
-    },
-    {
-      id: "2",
-      title: "substract",
-      value: "-",
-    },
-    {
-      id: "3",
-      title: "multiply",
-      value: "*",
-    },
-    {
-      id: "4",
-      title: "divide",
-      value: "/",
-    },
-  ];
   constructor(props) {
     super(props);
     this.state = {
@@ -42,9 +20,14 @@ export class Calculator extends Component {
   clearResult = () => {
     this.setState({ result: "" });
   };
-  calculateResult = (value) => {
+  handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      this.calculateResult();
+    }
+  };
+  calculateResult = () => {
     try {
-      this.setState({ result: eval(this.state.result + value + this.state.input).toString() });
+      this.setState({ result: eval(this.state.input).toString() });
       this.setState({ input: '' });
     } catch (error) {
       this.setState({ result: "Error" });
@@ -62,7 +45,7 @@ export class Calculator extends Component {
             readOnly
             className="calculator__display"
           />
-          <label>Input:</label>
+          <label>Calculator:</label>
           <input
             type="text"
             value={this.state.input}
@@ -72,15 +55,6 @@ export class Calculator extends Component {
           />
         </div>
         <div className="calculator__actions">
-          {this.btns.map(({ title, value, id }) => (
-            <button
-              key={id}
-              onClick={() => this.calculateResult(value)}
-              className="calculator__button"
-            >
-              {title}
-            </button>
-          ))}
           <button
             onClick={this.clearInput}
             className="calculator__button calculator__clear"
@@ -92,6 +66,12 @@ export class Calculator extends Component {
             className="calculator__button calculator__clear"
           >
             Clear result
+          </button>
+          <button
+            onClick={this.calculateResult}
+            className="calculator__button calculator__equal"
+          >
+            Get Result
           </button>
         </div>
       </div>
